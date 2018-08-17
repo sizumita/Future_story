@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}物語の一覧{% endblock title %}
+{% block content %}
+    <h4 class="mt-4 border-bottom">物語の一覧</h4>
+    <div class="flex">
+        {% for story in storys %}
+          <a class="noline" href="{% url 'story:show_story' story_id=story.id %}"><div class="block-0"><div class="boid">{{ story.name }}</div><br><div class="short">{{ story.first_text|truncatechars:50 }}</div>【{{ story.get_tag1_display }}】 【{{ story.get_tag2_display }}】 【{{ story.get_tag3_display }}】<br> </div></a>
+
+        {% endfor %}
+    </div>
+{% endblock content %}

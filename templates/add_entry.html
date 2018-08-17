@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% load story_extras %}
+
+{% block title %}物語の続きを書く{% endblock title %}
+
+{% block content %}
+    <h4 class="mt-4 mb-5 border-bottom">物語の続きを書く</h4>
+    <h5 class="mt-5 mb-5 border-bottom">あなたに小説が届きました！続きを書いてみよう！</h5>
+    <div class="large">名前: {{ user.id|get_story_name }}</div>
+    <p class="large">本文</p>
+    <div class="box1">{{ user.id|get_story| linebreaks }}</div>
+    <form action="{% url 'story:add_story_entry' user.id|get_id %}" method="post">
+
+      {% csrf_token %}
+      {% bootstrap_form form layout='horizontal' %}
+      <div class="form-group row">
+        <div class="offset-md-3 col-md-9">
+          <button type="submit" class="btn btn-primary">送信</button>
+        </div>
+      </div>
+    </form>
+    <a href="{% url 'story:top' %}" class="btn btn-secondary btn-sm">戻る</a>
+{% endblock content %}

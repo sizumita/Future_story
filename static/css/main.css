@@ -1,0 +1,88 @@
+a:hover {
+  color: black;
+  text-decoration: none;
+}
+
+
+
+div.block-0 {
+    width:600px; height:170px;
+    margin:5px; padding:10px; border:1px solid lightgrey;
+    color: black;
+    background-color:lightgray;
+    box-shadow: 0 0 8px gray;
+    border-radius: 20px;
+}
+
+
+div.block-1 {
+    width:600px; height:120px;
+    margin:5px; padding:10px; border:1px solid cornflowerblue;
+    color: honeydew;
+    background-color: cornflowerblue;
+    box-shadow: 0 0 8px gray;
+    border-radius: 20px;
+}
+
+.flex{
+    width: 610px;
+  padding: 2.5% 0;
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+    background: whitesmoke;
+    /*border-radius: 20px;*/
+}
+
+a {color: grey}
+
+body {
+	background-color: whitesmoke;
+}
+
+.box1 {
+    padding: 0.5em 1em;
+    margin: 2em 0;
+    font-weight: bold;
+    color: #6091d3;/*文字色*/
+    background: #FFF;
+    border: solid 3px #6091d3;/*線*/
+    border-radius: 10px;/*角の丸み*/
+}
+.box1 p {
+    margin: 0;
+    padding: 0;
+}
+
+.large {
+    font-size: 120%;
+}
+
+
+a.create_profile{
+    font-size:1em;
+    display:block;
+    width:300px;
+    padding-top:10px;
+    padding-bottom:10px;
+    text-align:center;
+    border:2px solid;
+    border-color:lightgreen;
+    background:lightgreen;
+    border-radius: 20px;
+    box-shadow: 0 0 8px gray;
+}
+
+a.create_profile:hover{
+background:greenyellow;
+border-color:greenyellow;
+}
+
+
+.boid {
+    font-weight:bolder;
+}
+
+.short {
+    font-weight:lighter;
+}

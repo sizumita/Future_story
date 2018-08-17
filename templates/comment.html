@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h4 class="mt-4 mb-5 border-bottom">コメント一覧</h4>
+    <p><a href="{% url 'story:show_story' story.id %}" class="btn btn-primary btn-sm">物語のページへ</a></p>
+    {% for comment in comments %}
+    <div class="block-1"><p>投稿者: {{ comment.user.username }}</p><p>{{ comment.text }}</p></div>
+    {% endfor %}
+{% endblock content %}

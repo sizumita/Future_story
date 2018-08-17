@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block title %}物語の詳細{% endblock title %}
+{% block content %}
+    <h4 class="mt-4 border-bottom">{{ story.name }}</h4>
+    <div class="box1">
+    <p>{{ story.first_text }}</p>
+    {% for entry in entrys %}
+    <p>{{ entry.text }}</p>
+    {% endfor %}
+    </div>
+    <h5 class="mt-5 border-bottom">物語の情報</h5>
+    <br>
+    名前: {{ story.name }}<br>
+    開始した日: {{ story.start_datetime.date }}
+    <br><br>
+
+    <h6 class="mt-6 border-bottom">始めたユーザー</h6>
+    <br>
+    {{ story.starter.username }}
+    <br><br>
+
+    <h6 class="mt-6 border-bottom">書き加えたユーザー</h6>
+    {% for entry in entrys %}<p>{{ entry.user.username }}</p>{% endfor %}
+    <h6 class="mt-6 border-bottom">最新五件のコメント</h6>
+    {% for comment in comments %}
+        <div class="block-1"><p>投稿者: {{ comment.user.username }}</p><p>{{ comment.text }}</p></div>
+    {% endfor %}
+    <p><a href="{% url 'story:comment_page' story.id %}" class="btn btn-primary btn-sm">コメントページへ</a></p>
+    <h5 class="mt-5 border-bottom">コメントを書く</h5>
+    <form action="{% url 'story:show_story' story.id %}" method="post">
+
+      {% csrf_token %}
+      {% bootstrap_form form layout='horizontal' %}
+      <div class="form-group row">
+        <div class="offset-md-3 col-md-9">
+          <button type="submit" class="btn btn-primary">送信</button>
+        </div>
+      </div>
+    </form>
+
+{% endblock content %}
+

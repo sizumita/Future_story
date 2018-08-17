@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}プロフィール{% endblock title %}
+{% block content %}
+    <h4 class="mt-4 border-bottom"><strong>あなたのプロフィール</strong></h4>
+<table class="table">
+    <tbody>
+        <tr>
+            <th>ユーザー名</th>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+            <th>email</th>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <th>年齢</th>
+            <td>{{ user.age }} 歳</td>
+        </tr>
+        <tr>
+            <th>自己紹介</th>
+            <td>{{ user.profile.profile_text }}</td>
+        </tr>
+    </tbody>
+
+</table>
+        <p><a href="{% url 'story:top' %}" class="btn btn-primary btn-sm">ユーザー情報の変更</a></p>
+<p><a href="{% url 'story:edit_profile' %}" class="btn btn-primary btn-sm">自己紹介の変更</a></p>
+
+{% endblock %}

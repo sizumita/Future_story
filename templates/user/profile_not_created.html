@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}プロフィール{% endblock title %}
+{% block content %}
+    <h4 class="mt-4 border-bottom">あなたのプロフィール</h4>
+<p>まだプロフィールを作成していません。</p>
+    <a class="create_profile" href="{% url 'story:edit_profile' %}">今すぐプロフィールを作成する</a>
+{% endblock %}
