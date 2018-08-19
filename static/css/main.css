@@ -10,7 +10,7 @@ div.block-0 {
     margin:5px; padding:10px; border:1px solid lightgrey;
     color: black;
     background-color:lightgray;
-    box-shadow: 0 0 8px gray;
+    box-shadow: 0 0 8px lightgray;
     border-radius: 20px;
 }
 
@@ -20,8 +20,54 @@ div.block-1 {
     margin:5px; padding:10px; border:1px solid cornflowerblue;
     color: honeydew;
     background-color: cornflowerblue;
-    box-shadow: 0 0 8px gray;
+    box-shadow: 0 0 8px lightgray;
     border-radius: 20px;
+}
+
+div.block-2 {
+    width:65px; height:65px;
+    margin:5px; padding:10px; border:3px solid #F2F2F2;
+    color: honeydew;
+    background-color: #4BD111;
+    box-shadow: 0 0 8px lightgray;
+    border-radius: 50px;
+        position: fixed;
+    top: 15%;
+    left: 2%;
+        bottom: 0;
+}
+
+.balloon1-top {
+    background-color: #4BD111;
+	position: relative;
+	display: inline-block;
+    top: -25px;
+    left: -35%;
+ 	margin: 1.5em 0;
+	padding: 7px 10px;
+	min-width: 70px;
+ 	max-width: 100%;
+ 	color: whitesmoke;
+	font-size: 16px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.balloon1-top:before{
+	content: "";
+	position: absolute;
+	top: -29px;
+	left: 50%;
+ 	margin-left: -15px;
+	border: 15px solid transparent;
+	border-bottom: 15px solid #4BD111;
+
+}
+
+.balloon1-top p {
+
+	margin: 0;
+	padding: 0;
 }
 
 .flex{
@@ -49,6 +95,7 @@ body {
     border: solid 3px #6091d3;/*線*/
     border-radius: 10px;/*角の丸み*/
 }
+
 .box1 p {
     margin: 0;
     padding: 0;
@@ -86,3 +133,20 @@ border-color:greenyellow;
 .short {
     font-weight:lighter;
 }
+
+#container{
+    position: relative;
+}
+
+p.gotop{
+    position: fixed;
+    top: 15%;
+    left: 2%;
+        bottom: 0;
+}
+p.gotop a{
+    width: 125px;
+    height: 94px;
+    display: block;
+}
+

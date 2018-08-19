@@ -8,11 +8,9 @@ from django.contrib.auth.views import (
 from django.core.urlresolvers import reverse_lazy
 from django.views import generic
 from .forms import LoginForm, RegisterForm, ProfileForm, StoryForm, EntryForm, CommentForm
-from .models import Story, AuthUser, Entry, Profile, Write_Entry, Comment
+from .models import Story, AuthUser, Entry, Profile, Write_Entry, Comment, Evaluation
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
-import json
-from django.http import HttpResponse, Http404, JsonResponse
 
 
 class Top(generic.TemplateView):
@@ -86,7 +84,9 @@ def write_entry(request, story_id=None):
                 _story_id = x.story.id
             if str(_story_id) != story_id:
                 return render(request, 'not_found.html', dict(title="時間が経ち過ぎました！ 。・゜゜・(>_<)・゜゜・。",
-                                                                 message="次の小説を書いてみよう！"))
+                                                              message="次の小説を書いてみよう！"
+                                                              )
+                              )
             entry = form.save(commit=False)
             entry.user = request.user
             entry.story = story[0].story
@@ -119,6 +119,10 @@ def story_list(request):
 def show_story(request, story_id=None):
     story = get_object_or_404(Story, id=story_id)
     entrys = Entry.objects.filter(story=story)
+    vote_num = 0
+    if Evaluation.objects.filter(story=story).exists():
+        evaluation = Evaluation.objects.filter(story=story)[0]
+        vote_num = evaluation.nice
     comments = Comment.objects.filter(story=story)[0:4]
     comment = Comment()
 
@@ -134,7 +138,10 @@ def show_story(request, story_id=None):
     else:
         form = CommentForm(instance=comment)
 
-    return render(request, 'show_story.html', dict(story=story, entrys=entrys, form=form, comments=comments))
+    return render(request, 'show_story.html', dict(story=story, entrys=entrys,
+                                                   form=form, comments=comments, vote=vote_num
+                                                   )
+                  )
 
 
 @login_required
@@ -175,3 +182,32 @@ def comment_page(request, story_id):
     comments = Comment.objects.filter(story=story)
 
     return render(request, 'comment.html', dict(comments=comments, story=story))
+
+
+def entry_list(request, page):
+    entrys = Entry.objects.all().order_by('create_datetime')[int(page) * 20 - 20: int(page) * 20]
+
+    return render(request, 'entry_list.html', dict(entrys=entrys, page=page))
+
+
+@login_required
+def add_nice(request, story_id):
+    story = get_object_or_404(Story, id=story_id)
+    if Evaluation.objects.filter(story=story).exists():
+        evaluation = Evaluation.objects.filter(story=story)[0]
+        if request.user in evaluation.nice_users.all():
+            evaluation.nice_users.remove(request.user)
+            evaluation.nice -= 1
+            evaluation.save()
+            return redirect('story:show_story', story_id)
+        evaluation.nice_users.add(request.user)
+        evaluation.nice += 1
+        evaluation.save()
+        return redirect('story:show_story', story_id)
+
+    else:
+        evaluation = Evaluation(story=story, nice=1)
+        evaluation.save()
+        evaluation.nice_users.add(request.user)
+        return redirect('story:show_story', story_id)
+

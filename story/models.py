@@ -120,14 +120,18 @@ class Write_Entry(models.Model):
 class Evaluation(models.Model):
     """評価"""
     nice = models.IntegerField(default=0)
+    story = models.OneToOneField(Story)
     nice_users = models.ManyToManyField(AuthUser)
+
+    def __str__(self):
+        return self.story.name
 
 
 class Comment(models.Model):
     user = models.ForeignKey(AuthUser)
     story = models.ForeignKey(Story, null=True)
     star = models.IntegerField(choices=STARS, default=3)
-    text = models.TextField(max_length=1000, default="")
+    text = models.TextField(max_length=100, default="")
 
     def __str__(self):
         return self.user.username

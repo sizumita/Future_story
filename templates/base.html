@@ -1,5 +1,6 @@
    {% load static %}
 {% load story_extras %}
+{% load bootstrap4 %}
 <!doctype html>
     <html lang="ja">
     <head>
@@ -19,7 +20,7 @@
     </head>
     <body>
         <!-- ナビバー -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" id="menu-wrap">
           <a class="navbar-brand" href="{% url 'story:top' %}"><font size="5">Future-story</font>  <font size="2">未来の物語を、あなたが。</font> </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -35,7 +36,7 @@
               </a>
               </li>
               <li class="nav-item">
-              <a class="nav-item nav-link " href="{% url 'story:story_list' %}">
+              <a class="nav-item nav-link " href="{% url 'story:entry_list' 1 %}">
                 最新のストーリー
               </a>
               </li>
@@ -78,10 +79,88 @@
           </div>
         </nav>
 
+        {% if alert %}
+{% bootstrap_alert alert%}
+        {% endif %}
+
         <!-- メインコンテント -->
         <div class="container mt-3">
+{#        <p class="gotop">#}
+{#    <a href="#">#}
+{#    <img src="images/gotop.png" alt="ページトップへ戻る">#}
+{#    </a>#}
+{#</p>#}
             {% block content %}{% endblock %}
         </div>
+{#        <script>#}
+{#$(document).ready(function(){#}
+{##}
+{#    $(".gotop").hide();#}
+{#     // ↑ページトップボタンを非表示にする#}
+{##}
+{#    $(window).on("scroll", function() {#}
+{##}
+{#        if ($(this).scrollTop() > 100) {#}
+{#            // ↑ スクロール位置が100よりも小さい場合に以下の処理をする#}
+{#            $('.gotop').slideDown("fast");#}
+{#            // ↑ (100より小さい時は)ページトップボタンをスライドダウン#}
+{#        } else {#}
+{#            $('.gotop').slideUp("fast");#}
+{#            // ↑ それ以外の場合の場合はスライドアップする。#}
+{#        }#}
+{##}
+{#    // フッター固定する#}
+{##}
+{#        scrollHeight = $(document).height();#}
+{#        // ドキュメントの高さ#}
+{#        scrollPosition = $(window).height() + $(window).scrollTop();#}
+{#        //　ウィンドウの高さ+スクロールした高さ→　現在のトップからの位置#}
+{#        footHeight = $("footer").innerHeight();#}
+{#        // フッターの高さ#}
+{##}
+{#        if ( scrollHeight - scrollPosition  <= footHeight ) {#}
+{#        // 現在の下から位置が、フッターの高さの位置にはいったら#}
+{#        //  ".gotop"のpositionをabsoluteに変更し、フッターの高さの位置にする#}
+{#            $(".gotop").css({#}
+{#                "position":"absolute",#}
+{#                "bottom": footHeight#}
+{#            });#}
+{#        } else {#}
+{#        // それ以外の場合は元のcssスタイルを指定#}
+{#            $(".gotop").css({#}
+{#                "position":"fixed",#}
+{#                "bottom": "0px"#}
+{#            });#}
+{#        }#}
+{#    });#}
+{##}
+{#    // トップへスムーススクロール#}
+{#    $('.gotop a').click(function () {#}
+{#        $('body,html').animate({#}
+{#        scrollTop: 0#}
+{#        }, 500);#}
+{#        // ページのトップへ 500 のスピードでスクロールする#}
+{#        return false;#}
+{#     });#}
+{##}
+{# } ); #}
+{##}
+{#</script>#}
+<script>
+    var menuHeight = $("#menu-wrap").height();
+	var startPos = 0;
+	$(window).scroll(function(){
+	  var currentPos = $(this).scrollTop();
+	  if (currentPos > startPos) {
+	    if($(window).scrollTop() >= 200) {
+	      $("#menu-wrap").css("top", "-" + menuHeight + "px");
+	    }
+	  } else {
+	    $("#menu-wrap").css("top", 0 + "px");
+	  }
+	  startPos = currentPos;
+	});
+</script>
 
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->

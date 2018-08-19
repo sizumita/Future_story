@@ -1,5 +1,6 @@
 from django import template
-from story.models import Write_Entry, AuthUser, Entry, Story
+from future_story.settings import STATIC_URL
+from story.models import Write_Entry, AuthUser, Entry, Story, Evaluation
 register = template.Library()
 
 
@@ -38,3 +39,16 @@ def can_write_entry(value):
         return False
     else:
         return True
+
+
+@register.filter(name='already_vote')
+def already_vote(value, arg):
+    try:
+        if Evaluation.objects.filter(story_id=arg).exists():
+            evaluation = Evaluation.objects.filter(story_id=arg)[0]
+            if AuthUser.objects.filter(id=value)[0] in evaluation.nice_users.all():
+                return 'images/good_already.png'
+            else:
+                return 'images/good.png'
+    except IndexError:
+        return 'images/good.png'
